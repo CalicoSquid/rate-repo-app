@@ -15,8 +15,8 @@ const theme = {
   },
   fonts: Platform.select({
     ios: {
-      main: "System",
-      heading: "System",
+      main: "Ariel",
+      heading: "Ariel",
       monospace: "monospace",
     },
     android: {
