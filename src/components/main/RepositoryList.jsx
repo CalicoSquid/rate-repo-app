@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
   },
   item: {
     width: "100%",
+    backgroundColor: "#e1e4e8",
   },
 });
 

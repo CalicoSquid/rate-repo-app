@@ -21,10 +21,20 @@ const styles = StyleSheet.create({
     letterSpacng: 2,
     textShadowColor: "rgba(0, 0, 0, 0.75)",
   },
+  button: {
+    backgroundColor: theme.colors.primary,
+    color: theme.colors.textPrimary,
+    padding: 10,
+    fontSize: theme.fontSizes.heading,
+    borderRadius: 5,
+    marginTop: 10,
+    textAlign: "center",
+  },
   colorBgText: {
     backgroundColor: theme.colors.primary,
     color: theme.colors.textPrimary,
     padding: 5,
+    fontSize: theme.fontSizes.heading,
     borderRadius: 5,
     marginTop: 10,
     display: "flex",
@@ -45,9 +55,12 @@ const styles = StyleSheet.create({
   fontWeightBold: {
     fontWeight: theme.fontWeights.bold,
   },
+  smallText: {
+    fontSize: theme.fontSizes.small,
+  }
 });
 
-const Text = ({ color, colorBg, fontSize, fontWeight, style, title, ...props }) => {
+const Text = ({ color, button, colorBg, small, fontSize, fontWeight, style, title, ...props }) => {
   const textStyle = [
     styles.text,
     color === "textSecondary" && styles.colorTextSecondary,
@@ -56,6 +69,8 @@ const Text = ({ color, colorBg, fontSize, fontWeight, style, title, ...props }) 
     fontWeight === "bold" && styles.fontWeightBold,
     title && styles.title,
     colorBg && styles.colorBgText,
+    small && styles.smallText,
+    button && styles.button,
     style,
   ];
 

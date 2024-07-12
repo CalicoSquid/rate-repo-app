@@ -1,10 +1,11 @@
 import { Pressable } from "react-native";
 import Text from "../../Text";
+import { Link } from "react-router-native";
 
 export default function RepositoryTab() {
   return (
-    <Pressable onPress={() => console.log("Pressed")}>
-        <Text title>Repositories</Text>
-      </Pressable>
-  )
+    <Link to="/repositories">
+      <Text title>Repositories</Text>
+    </Link>
+  );
 }

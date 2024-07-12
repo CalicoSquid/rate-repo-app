@@ -1,13 +1,17 @@
-import { View, StyleSheet, Pressable } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import theme from "../../theme";
 import Constants from "expo-constants";
 
+import SignIn from "./Tabs/SignInTab";
 import RepositoryTab from "./Tabs/RepositoryTab";
 
 export default function AppBar() {
   return (
     <View style={styles.container}>
-      <RepositoryTab />
+      <ScrollView horizontal contentContainerStyle={styles.tabs}>
+        <RepositoryTab />
+        <SignIn />
+      </ScrollView>
     </View>
   );
 }
@@ -15,10 +19,12 @@ export default function AppBar() {
 const styles = StyleSheet.create({
   container: {
     paddingTop: Constants.statusBarHeight,
-    display: "flex",
+    backgroundColor: theme.colors.primary,
+  },
+  tabs: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: theme.colors.primary,
+    paddingHorizontal: 10,  // Add padding if needed
   },
 });
