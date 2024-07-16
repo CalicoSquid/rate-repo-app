@@ -36,7 +36,12 @@ export default function RepositoryItem({ item }) {
   return (
     <View style={styles.item}>
       <View style={styles.top}>
-        <Image source={defaultImg} style={styles.image} />
+        <Image
+          source={
+            item.ownerAvatarUrl ? { uri: item.ownerAvatarUrl } : defaultImg
+          }
+          style={styles.image}
+        />
         <View style={styles.topDetails}>
           <Text fontSize="subheading" fontWeight="bold">
             {item.fullName}
@@ -59,7 +64,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     backgroundColor: "white",
     borderRadius: 5,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
@@ -83,8 +88,8 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   language: {
-    color: '#0366d6',
-    fontWeight: 'bold',
+    color: "#0366d6",
+    fontWeight: "bold",
     marginTop: 4,
   },
   bottom: {
