@@ -27,14 +27,14 @@ export default function RepositoryItem({ item }) {
   ];
 
   const infoBar = info.map((info) => (
-    <View style={styles.infoBar} key={info.text}>
+    <View style={styles.infoBar} key={info.text} >
       <Text fontWeight="bold">{info.value}</Text>
       <Text color="textSecondary">{info.text}</Text>
     </View>
   ));
 
   return (
-    <View style={styles.item}>
+    <View style={styles.item} testID="repositoryItem">
       <View style={styles.top}>
         <Image
           source={

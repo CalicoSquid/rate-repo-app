@@ -13,7 +13,10 @@ export default function SignInForm({ onSubmit }) {
   const formik = useFormik({
     initialValues,
     validationSchema,
-    onSubmit,
+    onSubmit: (values) => {
+      console.log("Submitting", values); // Debugging line
+      onSubmit(values);
+    },
   });
 
   const passwordError = formik.touched.password && formik.errors.password;
@@ -29,6 +32,8 @@ export default function SignInForm({ onSubmit }) {
         textContentType="username"
         autoFocus
         onChangeText={formik.handleChange("username")}
+        onBlur={formik.handleBlur("username")}
+        value={formik.values.username}
       />
       {usernameError && (
         <Text style={{ color: "red" }}>{formik.errors.username}</Text>
@@ -41,18 +46,22 @@ export default function SignInForm({ onSubmit }) {
         textContentType="password"
         secureTextEntry
         onChangeText={formik.handleChange("password")}
+        onBlur={formik.handleBlur("password")}
+        value={formik.values.password}
       />
       {passwordError && (
         <Text style={{ color: "red" }}>{formik.errors.password}</Text>
       )}
       <Pressable onPress={formik.handleSubmit}>
-        <Text button>Sign In</Text>
+        <Text button testID="submit-button">
+          Sign In
+        </Text>
       </Pressable>
     </View>
   );
 }
 
-styles = StyleSheet.create({
+const styles = StyleSheet.create({
   separator: {
     height: 10,
   },

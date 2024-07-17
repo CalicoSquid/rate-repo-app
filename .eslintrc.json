@@ -1,20 +1,31 @@
 {
-  "plugins": ["react", "react-native"],
+  "parser": "@babel/eslint-parser",
+  "plugins": ["react", "react-native", "jest"],
   "settings": {
     "react": {
       "version": "detect"
     }
   },
-  "extends": ["eslint:recommended", "plugin:react/recommended"],
-  "parser": "@babel/eslint-parser",
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:jest/recommended"
+  ],
   "parserOptions": {
-    "requireConfigFile": false,
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
   },
   "env": {
-    "react-native/react-native": true
+    "es6": true,
+    "react-native/react-native": true,
+    "jest/globals": true
   },
   "rules": {
     "react/prop-types": "off",
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "no-unused-vars": "warn"
   }
 }

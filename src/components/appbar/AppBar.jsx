@@ -9,9 +9,10 @@ import RepositoryTab from "./Tabs/RepositoryTab";
 
 export default function AppBar() {
 
-  const { data, loading, error } = useQuery(GET_ME);
-  console.log(data)
-  const authTab = data.me ? <SignOut /> : <SignIn />
+  const { data} = useQuery(GET_ME, {
+    fetchPolicy: "cache-and-network",
+  });
+  const authTab = data?.me ? <SignOut /> : <SignIn />
   
   return (
     <View style={styles.container}>
