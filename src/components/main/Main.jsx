@@ -6,6 +6,7 @@ import SignIn from "../auth/SignIn";
 import SignUp from "../auth/SignUp";
 import CreateReviewContainer from "./CreateReviewContainer";
 import { Route, Routes, Navigate } from "react-router-native";
+import MyReviews from "./MyReviews";
 
 export default function Main() {
   return (
@@ -15,6 +16,7 @@ export default function Main() {
         <Route path="/" element={<RepositoryList />} />
         <Route path="/repository/:id" element={<RepositoryItemPage />} />
         <Route path="/createreview" element={<CreateReviewContainer />} />
+        <Route path="myreviews" element={<MyReviews />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="*" element={<Navigate to="/" replace />} />
@@ -27,6 +29,5 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     flexShrink: 1,
-    //backgroundColor: "#e1e4e8",
   },
 });

@@ -2,18 +2,14 @@
 import { View, StyleSheet, Pressable, Linking } from "react-native";
 import Text from "../Text";
 import { useParams } from "react-router-native";
-import { GET_REPOSITORY } from "../../graphql/queries";
 import Loading from "../state/Loading";
-import { useQuery } from "@apollo/client";
 import RepositoryItem from "./RepositoryItem";
 import ReviewList from "./ReviewList";
+import useGetRepository from "../../hooks/useGetRepository";
 
 const RepositoryItemPage = () => {
   const { id } = useParams();
-  const { data, loading, error } = useQuery(GET_REPOSITORY, {
-    variables: { id },
-    fetchPolicy: "cache-and-network",
-  });
+  const { data, loading, error } = useGetRepository(id);
 
   if (loading) return <Loading />; 
   if (error) return <Text>{error.message}</Text>;

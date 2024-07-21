@@ -1,20 +1,67 @@
 import React from "react";
-import { Text } from "react-native";
+import Text from "../Text";
 import Loading from "../state/Loading";
-import { useQuery } from "@apollo/client";
-import { GET_REPOSITORIES } from "../../graphql/queries";
 import RepositoryListContainer from "./RepositoryListContainer";
+import { View, StyleSheet } from "react-native";
+import { useState } from "react";
+import useRepositories from "../../hooks/useRepositories";
+import { useDebounce } from "use-debounce";
 
 const RepositoryList = () => {
-  const { data, loading, error } = useQuery(GET_REPOSITORIES, {
-    fetchPolicy: "cache-and-network",
-  });
+  const [filter, setFilter] = useState("latest");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQueryDebounced] = useDebounce(searchQuery, 500);
+  const { data, loading, error } = useRepositories(
+    filter,
+    searchQueryDebounced
+  );
 
-  if (loading) return <Loading />;
-  if (error) return <Text>{error.message}</Text>;
+  if (!data) {
+    return <Text>No data</Text>;
+  }
 
-  return <RepositoryListContainer data={data} />;
+  const filterProps = { filter, setFilter, searchQuery, setSearchQuery };
+
+  return (
+    <View style={{ flex: 1 }}>
+      {loading && (
+        <View style={styles.loadingContainer}>
+          <Loading />
+        </View>
+      )}
+      {error && (
+        <View style={styles.errorContainer}>
+          <Text>{error.message}</Text>
+        </View>
+      )}
+
+      <RepositoryListContainer data={data} filterProps={filterProps} />
+    </View>
+  );
 };
 
-export default RepositoryList;
+const styles = StyleSheet.create({
+  loadingContainer: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 10,
+  },
+  errorContainer: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 10,
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
+  },
+});
 
+export default RepositoryList;

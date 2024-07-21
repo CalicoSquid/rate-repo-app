@@ -8,6 +8,7 @@ import SignIn from "./Tabs/SignInTab";
 import SignOut from "./Tabs/SignOutTab";
 import RepositoryTab from "./Tabs/RepositoryTab";
 import CreateReview from "./Tabs/CreateReviewTab";
+import MyReviews from "./Tabs/MyReviewsTab";
 
 const AppBar = () => {
   const { data } = useQuery(GET_ME, {
@@ -17,6 +18,7 @@ const AppBar = () => {
   const authTabs = data?.me ? (
     <View style={styles.authTabs}>
       <CreateReview />
+      <MyReviews />
       <SignOut />
     </View>
   ) : (

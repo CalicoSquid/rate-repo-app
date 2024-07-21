@@ -1,9 +1,24 @@
 import { gql } from "@apollo/client";
 import { REPOSITORY_FRAGMENT } from "./fragments";
 
+const filter = gql`
+  enum AllRepositoriesOrderBy {
+    CREATED_AT
+    RATING_AVERAGE
+  }
+`;
+
 export const GET_REPOSITORIES = gql`
-  query GetRepositories {
-    repositories {
+  query GetRepositories(
+    $orderBy: AllRepositoriesOrderBy
+    $orderDirection: OrderDirection
+    $searchKeyword: String
+  ) {
+    repositories(
+      orderBy: $orderBy
+      orderDirection: $orderDirection
+      searchKeyword: $searchKeyword
+    ) {
       edges {
         node {
           ...RepositoryFragment
@@ -17,7 +32,7 @@ export const GET_REPOSITORIES = gql`
 export const GET_REPOSITORY = gql`
   query GetRepository($id: ID!) {
     repository(id: $id) {
-    url
+      url
       ...RepositoryFragment
     }
   }
@@ -25,9 +40,23 @@ export const GET_REPOSITORY = gql`
 `;
 
 export const GET_ME = gql`
-  query GetMe {
+  query GetMe ($includeReviews: Boolean = false) {
     me {
       username
+      reviews @include(if: $includeReviews) {
+        edges {
+          node {
+            id
+            repositoryId
+            repository {
+              fullName
+            }
+            text
+            rating
+            createdAt
+          }
+        }
+      }
     }
   }
 `;
@@ -51,4 +80,4 @@ export const GET_REVIEWS = gql`
       }
     }
   }
-`;  
+`;
