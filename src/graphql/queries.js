@@ -14,6 +14,16 @@ export const GET_REPOSITORIES = gql`
   ${REPOSITORY_FRAGMENT}
 `;
 
+export const GET_REPOSITORY = gql`
+  query GetRepository($id: ID!) {
+    repository(id: $id) {
+    url
+      ...RepositoryFragment
+    }
+  }
+  ${REPOSITORY_FRAGMENT}
+`;
+
 export const GET_ME = gql`
   query GetMe {
     me {
@@ -21,3 +31,24 @@ export const GET_ME = gql`
     }
   }
 `;
+
+export const GET_REVIEWS = gql`
+  query GetReviews($repositoryId: ID!) {
+    repository(id: $repositoryId) {
+      id
+      reviews {
+        edges {
+          node {
+            id
+            text
+            rating
+            createdAt
+            user {
+              username
+            }
+          }
+        }
+      }
+    }
+  }
+`;  

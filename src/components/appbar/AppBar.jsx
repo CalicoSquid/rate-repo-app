@@ -1,38 +1,49 @@
+import React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
-import theme from "../../theme";
 import Constants from "expo-constants";
+import theme from "../../theme";
 import { useQuery } from "@apollo/client";
 import { GET_ME } from "../../graphql/queries";
 import SignIn from "./Tabs/SignInTab";
 import SignOut from "./Tabs/SignOutTab";
 import RepositoryTab from "./Tabs/RepositoryTab";
+import CreateReview from "./Tabs/CreateReviewTab";
 
-export default function AppBar() {
-
-  const { data} = useQuery(GET_ME, {
+const AppBar = () => {
+  const { data } = useQuery(GET_ME, {
     fetchPolicy: "cache-and-network",
   });
-  const authTab = data?.me ? <SignOut /> : <SignIn />
-  
+
+  const authTabs = data?.me ? (
+    <View style={styles.authTabs}>
+      <CreateReview />
+      <SignOut />
+    </View>
+  ) : (
+    <SignIn />
+  );
+
   return (
     <View style={styles.container}>
-      <ScrollView horizontal contentContainerStyle={styles.tabs}>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         <RepositoryTab />
-        {authTab}
+        {authTabs}
       </ScrollView>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     paddingTop: Constants.statusBarHeight,
     backgroundColor: theme.colors.primary,
+    flexDirection: "row", // Ensure contents are laid out horizontally
   },
-  tabs: {
-    flexDirection: "row",
+  authTabs: {
+    flexDirection: "row", // Align auth tabs horizontally
     alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 10,  // Add padding if needed
+    marginLeft: 10, // Adjust spacing between RepositoryTab and authTabs
   },
 });
+
+export default AppBar;

@@ -5,7 +5,7 @@ import SignInForm from "../../components/auth/SignInForm";
 describe("SignIn", () => {
   describe("SignInForm", () => {
     it("renders correctly and calls onSubmit with the correct values", async () => {
-      //const user= {username: "kalle", password: "password"}
+
       const onSubmit = jest.fn();
       render(<SignInForm onSubmit={onSubmit} />);
 

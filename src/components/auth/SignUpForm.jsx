@@ -1,31 +1,17 @@
 import { View, TextInput, StyleSheet, Pressable } from "react-native";
 import Text from "../Text";
-import {validationSchema} from "../../yupSchema";
-import { useFormik } from "formik";
 import theme from "../../theme";
 
-export default function SignInForm({ onSubmit }) {
-  const initialValues = {
-    username: "",
-    password: "",
-  };
-
-  const formik = useFormik({
-    initialValues,
-    validationSchema,
-    onSubmit: (values) => {
-      console.log("Submitting", values); // Debugging line
-      onSubmit(values);
-    },
-  });
-
+export default function SignUpForm({ formik }) {
   const passwordError = formik.touched.password && formik.errors.password;
   const usernameError = formik.touched.username && formik.errors.username;
+  const confirmPasswordError =
+    formik.touched.confirmPassword && formik.errors.confirmPassword;
 
   return (
     <View style={styles.item}>
       <TextInput
-        style={[styles.input, usernameError && styles.error]}
+        style={styles.input}
         placeholder="Username"
         autoCapitalize="none"
         autoCompleteType="username"
@@ -39,7 +25,7 @@ export default function SignInForm({ onSubmit }) {
         <Text style={{ color: "red" }}>{formik.errors.username}</Text>
       )}
       <TextInput
-        style={[styles.input, passwordError && styles.error]}
+        style={styles.input}
         placeholder="Password"
         autoCapitalize="none"
         autoCompleteType="password"
@@ -52,9 +38,25 @@ export default function SignInForm({ onSubmit }) {
       {passwordError && (
         <Text style={{ color: "red" }}>{formik.errors.password}</Text>
       )}
+
+      <TextInput
+        style={styles.input}
+        placeholder="Password Confirmation"
+        autoCapitalize="none"
+        autoCompleteType="password"
+        textContentType="password"
+        secureTextEntry
+        onChangeText={formik.handleChange("confirmPassword")}
+        onBlur={formik.handleBlur("confirmPassword")}
+        value={formik.values.confirmPassword}
+      />
+
+      {confirmPasswordError && (
+        <Text style={{ color: "red" }}>{formik.errors.confirmPassword}</Text>
+      )}
       <Pressable onPress={formik.handleSubmit}>
         <Text button testID="submit-button">
-          Sign In
+          Sign Up
         </Text>
       </Pressable>
     </View>

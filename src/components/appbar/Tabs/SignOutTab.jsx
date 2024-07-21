@@ -1,21 +1,21 @@
-import { View, Pressable } from "react-native";
+import { Pressable } from "react-native";
 import Text from "../../Text";
 import useSignOut from "../../../hooks/useSignOut";
+import { useNavigate } from "react-router-native";
 
 export default function SignOut() {
-
-  const signout = useSignOut()
+  const signout = useSignOut();
+  const navigate = useNavigate();
 
   const handleSignOut = () => {
-    signout()
+    signout();
+    navigate("/");
     console.log("SignOut");
   };
 
   return (
-    <View>
-      <Pressable onPress={handleSignOut}>
-        <Text title>Sign Out</Text>
-      </Pressable>
-    </View>
+    <Pressable onPress={handleSignOut}>
+      <Text title>Sign Out</Text>
+    </Pressable>
   );
 }

@@ -1,68 +1,59 @@
-import { View, StyleSheet, Image } from "react-native";
-import defaultImg from "../../../assets/icon.png";
+import React from "react";
+import { View, StyleSheet, Image, Pressable } from "react-native";
 import Text from "../Text";
+import { useNavigate } from "react-router-native";
+import defaultImg from "../../../assets/icon.png";
+import {formatNumber} from "../../utils/formatNumber";
 
-export default function RepositoryItem({ item }) {
+const RepositoryItem = ({ item }) => {
   const { stargazersCount, forksCount, reviewCount, ratingAverage } = item;
+  const navigate = useNavigate();
 
+  // Info bar data
   const info = [
-    {
-      text: "Stars",
-      value:
-        stargazersCount > 999
-          ? (stargazersCount / 1000).toFixed(1) + "k"
-          : stargazersCount,
-    },
-    {
-      text: "Forks",
-      value:
-        forksCount > 999 ? (forksCount / 1000).toFixed(1) + "k" : forksCount,
-    },
-    {
-      text: "Reviews",
-      value:
-        reviewCount > 999 ? (reviewCount / 1000).toFixed(1) + "k" : reviewCount,
-    },
-    { text: "Rating", value: ratingAverage },
+    { text: "Stars", value: formatNumber(stargazersCount) },
+    { text: "Forks", value: formatNumber(forksCount) },
+    { text: "Reviews", value: formatNumber(reviewCount) },
+    { text: "Rating", value: ratingAverage.toFixed(1) },
   ];
 
-  const infoBar = info.map((info) => (
-    <View style={styles.infoBar} key={info.text} >
-      <Text fontWeight="bold">{info.value}</Text>
-      <Text color="textSecondary">{info.text}</Text>
+  // Info bar JSX
+  const infoBar = info.map((infoItem) => (
+    <View style={styles.infoBarItem} key={infoItem.text}>
+      <Text fontWeight="bold">{infoItem.value}</Text>
+      <Text color="textSecondary">{infoItem.text}</Text>
     </View>
   ));
 
   return (
-    <View style={styles.item} testID="repositoryItem">
-      <View style={styles.top}>
-        <Image
-          source={
-            item.ownerAvatarUrl ? { uri: item.ownerAvatarUrl } : defaultImg
-          }
-          style={styles.image}
-        />
-        <View style={styles.topDetails}>
-          <Text fontSize="subheading" fontWeight="bold">
-            {item.fullName}
-          </Text>
-          <Text color="textSecondary" style={styles.description}>
-            {item.description}
-          </Text>
-          <Text style={styles.language}>{item.language}</Text>
+    <Pressable onPress={() => navigate(`/repository/${item.id}`)} style={styles.container}>
+      <View style={styles.item}>
+        <View style={styles.top}>
+          <Image
+            source={item.ownerAvatarUrl ? { uri: item.ownerAvatarUrl } : defaultImg}
+            style={styles.image}
+          />
+          <View style={styles.topDetails}>
+            <Text style={styles.fullName}>{item.fullName}</Text>
+            <Text style={styles.description}>{item.description}</Text>
+            <Text style={styles.language}>{item.language}</Text>
+          </View>
         </View>
+        <View style={styles.bottom}>{infoBar}</View>
       </View>
-
-      <View style={styles.bottom}>{infoBar}</View>
-    </View>
+    </Pressable>
   );
-}
+};
 
 const styles = StyleSheet.create({
+  container: {
+    marginBottom: 10,
+    borderRadius: 5,
+    overflow: "hidden",
+  },
   item: {
-    padding: 20,
-    marginVertical: 8,
     backgroundColor: "white",
+    padding: 20,
     borderRadius: 5,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
@@ -73,31 +64,41 @@ const styles = StyleSheet.create({
   top: {
     flexDirection: "row",
     alignItems: "center",
+    marginBottom: 10,
   },
   image: {
     width: 50,
     height: 50,
-    borderRadius: 5,
+    borderRadius: 25,
     marginRight: 20,
   },
   topDetails: {
     flex: 1,
   },
+  fullName: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
   description: {
-    marginTop: 4,
-    marginBottom: 4,
+    fontSize: 14,
+    color: "#333",
+    marginBottom: 5,
   },
   language: {
     color: "#0366d6",
     fontWeight: "bold",
-    marginTop: 4,
   },
   bottom: {
     flexDirection: "row",
-    justifyContent: "space-around",
-    marginTop: 10,
+    justifyContent: "space-between",
+    borderTopWidth: 1,
+    borderTopColor: "#eee",
+    paddingTop: 10,
   },
-  infoBar: {
+  infoBarItem: {
     alignItems: "center",
   },
 });
+
+export default RepositoryItem;

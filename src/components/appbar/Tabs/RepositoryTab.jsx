@@ -1,10 +1,12 @@
 import Text from "../../Text";
-import { Link } from "react-router-native";
+import { useNavigate } from "react-router-native";
+import { Pressable } from "react-native";
 
 export default function RepositoryTab() {
+  const navigate = useNavigate();
   return (
-    <Link to="/repositories">
+    <Pressable onPress={() => navigate("/")}>
       <Text title>Repositories</Text>
-    </Link>
+    </Pressable>
   );
 }

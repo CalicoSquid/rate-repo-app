@@ -1,10 +1,12 @@
-import { Link } from "react-router-native";
+import { useNavigate } from "react-router-native";
+import { Pressable } from "react-native";
 import Text from "../../Text";
 
 export default function SignInTab() {
+  const navigate = useNavigate();
   return (
-    <Link to="/signin">
+    <Pressable onPress={() => navigate("/signin")}>
       <Text title>Sign In</Text>
-    </Link>
-  )
+    </Pressable>
+  );
 }

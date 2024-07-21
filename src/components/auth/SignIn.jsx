@@ -1,4 +1,5 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Pressable } from "react-native";
+import Text from "../Text";
 import SignInForm from "./SignInForm";
 import useSignin from "../../hooks/useSignin";
 import {useNavigate} from "react-router-native";
@@ -20,6 +21,9 @@ export default function SignIn() {
   return (
     <View style={styles.item}>
       <SignInForm onSubmit={onSubmit} />
+      <Pressable onPress={() => navigate("/signup")}>
+        <Text style={styles.signup} button>Dont have an account? Sign Up</Text>
+      </Pressable>
     </View>
   );
 }
@@ -31,5 +35,10 @@ const styles = StyleSheet.create({
   item: {
     height: "100%",
     width: "100%",
+  },
+  signup: {
+    marginTop: 10,
+    textAlign: "center",
+    backgroundColor: "transparent",
   },
 });

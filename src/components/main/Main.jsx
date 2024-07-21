@@ -1,9 +1,11 @@
 import { View, StyleSheet } from "react-native";
 import RepositoryList from "./RepositoryList";
+import RepositoryItemPage from "./RepositoryItemPage";
 import AppBar from "../appbar/AppBar";
 import SignIn from "../auth/SignIn";
-import { Route, Routes, Navigate } from 'react-router-native';
-
+import SignUp from "../auth/SignUp";
+import CreateReviewContainer from "./CreateReviewContainer";
+import { Route, Routes, Navigate } from "react-router-native";
 
 export default function Main() {
   return (
@@ -11,7 +13,10 @@ export default function Main() {
       <AppBar />
       <Routes>
         <Route path="/" element={<RepositoryList />} />
+        <Route path="/repository/:id" element={<RepositoryItemPage />} />
+        <Route path="/createreview" element={<CreateReviewContainer />} />
         <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </View>

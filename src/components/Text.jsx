@@ -1,31 +1,32 @@
+import React from "react";
 import { Text as NativeText, StyleSheet } from "react-native";
 
 import theme from "../theme";
 
 const styles = StyleSheet.create({
   text: {
-    color: theme.colors.textPrimary,
-    fontSize: theme.fontSizes.body,
     fontFamily: theme.fonts.main,
     fontWeight: theme.fontWeights.normal,
+    fontSize: theme.fontSizes.body,
+    color: theme.colors.textPrimary,
   },
   title: {
-    fontSize: theme.fontSizes.heading,
+    fontFamily: theme.fonts.heading,
     fontWeight: theme.fontWeights.bold,
-    fontFamily: theme.fonts.monospace,
+    fontSize: theme.fontSizes.heading,
     color: theme.colors.textPrimary,
     textTransform: "capitalize",
     marginBottom: 20,
     marginHorizontal: 15,
     alignSelf: "center",
-    letterSpacng: 2,
+    letterSpacing: 1, // Corrected letter spacing property
     textShadowColor: "rgba(0, 0, 0, 0.75)",
   },
   button: {
     backgroundColor: theme.colors.primary,
     color: theme.colors.textPrimary,
-    padding: 10,
-    fontSize: theme.fontSizes.heading,
+    padding: 12,
+    fontSize: theme.fontSizes.body,
     borderRadius: 5,
     marginTop: 10,
     textAlign: "center",
@@ -33,11 +34,10 @@ const styles = StyleSheet.create({
   colorBgText: {
     backgroundColor: theme.colors.primary,
     color: theme.colors.textPrimary,
-    padding: 5,
-    fontSize: theme.fontSizes.heading,
+    padding: 8,
+    fontSize: theme.fontSizes.body,
     borderRadius: 5,
     marginTop: 10,
-    display: "flex",
     alignSelf: "flex-start",
   },
   colorTextSecondary: {
@@ -57,10 +57,20 @@ const styles = StyleSheet.create({
   },
   smallText: {
     fontSize: theme.fontSizes.small,
-  }
+  },
 });
 
-const Text = ({ color, button, colorBg, small, fontSize, fontWeight, style, title, ...props }) => {
+const Text = ({
+  color,
+  button,
+  colorBg,
+  small,
+  fontSize,
+  fontWeight,
+  style,
+  title,
+  ...props
+}) => {
   const textStyle = [
     styles.text,
     color === "textSecondary" && styles.colorTextSecondary,
