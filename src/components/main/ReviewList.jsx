@@ -1,19 +1,20 @@
 import React from "react";
 import { FlatList } from "react-native";
 import Text from "../Text";
-import { useQuery } from "@apollo/client";
-import { GET_REVIEWS } from "../../graphql/queries";
 import Loading from "../state/Loading";
 import ReviewItem from "./ReviewItem";
+import useReviews from "../../hooks/useReviews";
 
 const ReviewList = ({ id }) => {
 
-  const { data, loading, error } = useQuery(GET_REVIEWS, {
-    variables: { repositoryId: id },
-    fetchPolicy: "cache-and-network",
-  });
+  const { data, loading, error, fetchMore } = useReviews(id, first = 3);
 
   if (error) return <Text>{error.message}</Text>;
+
+  const onEndReach = () => {
+    console.log("onEndReach");
+    fetchMore()
+  }
 
   return (
     <FlatList
@@ -22,6 +23,8 @@ const ReviewList = ({ id }) => {
       keyExtractor={(item) => item.node.id}
       renderItem={({ item }) => <ReviewItem review={item.node} />}
       ListEmptyComponent={loading ? <Loading /> : <Text>No reviews found</Text>}
+      onEndReached={onEndReach}
+      onEndReachedThreshold={0.5}
     />
   );
 };

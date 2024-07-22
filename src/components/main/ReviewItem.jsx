@@ -8,18 +8,21 @@ const ReviewItem = ({ review }) => {
 
   return (
     <View style={styles.containerWithButtons}>
-    <View style={styles.container}>
-      <View style={styles.ratingContainer}>
-        <Text style={styles.rating}>{review.rating}</Text>
+      <View style={styles.container}>
+        <View style={styles.ratingContainer}>
+          <Text style={styles.rating}>{review.rating}</Text>
+        </View>
+        <View style={styles.reviewDetails}>
+          <Text style={styles.username}>
+            {review?.user?.username
+              ? review.user.username
+              : review.repository.fullName}
+          </Text>
+          <Text style={styles.date}>{formattedDatestamp}</Text>
+          <Text style={styles.reviewText}>{review.text}</Text>
+        </View>
       </View>
-      <View style={styles.reviewDetails}>
-      <Text style={styles.username}>{review?.user?.username ? review.user.username : review.repository.fullName}</Text>
-      <Text style={styles.date}>{formattedDatestamp}</Text>
-        <Text style={styles.reviewText}>{review.text}</Text>
-      </View>
-     
-    </View>
-    {!review.user && <ReviewButtons review={review} />}
+      {!review.user && <ReviewButtons review={review} />}
     </View>
   );
 };

@@ -11,14 +11,20 @@ const RepositoryList = () => {
   const [filter, setFilter] = useState("latest");
   const [searchQuery, setSearchQuery] = useState("");
   const [searchQueryDebounced] = useDebounce(searchQuery, 500);
-  const { data, loading, error } = useRepositories(
+  const { data, loading, error, fetchMore } = useRepositories(
     filter,
-    searchQueryDebounced
+    searchQueryDebounced,
+    first = 3
   );
 
   if (!data) {
     return <Text>No data</Text>;
   }
+
+  const onEndReach = () => {
+    console.log("You have reached the end of the list");
+    fetchMore();
+  };
 
   const filterProps = { filter, setFilter, searchQuery, setSearchQuery };
 
@@ -35,7 +41,11 @@ const RepositoryList = () => {
         </View>
       )}
 
-      <RepositoryListContainer data={data} filterProps={filterProps} />
+      <RepositoryListContainer
+        data={data}
+        filterProps={filterProps}
+        onEndReach={onEndReach}
+      />
     </View>
   );
 };

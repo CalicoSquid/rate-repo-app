@@ -14,8 +14,8 @@ export const CREATE_REVIEW_MUTATION = gql`
     createReview(review: $review) {
       repositoryId
     }
-  } 
-`
+  }
+`;
 
 export const SIGN_UP_USER_MUTATION = gql`
   mutation CreateUser($user: CreateUserInput!) {
@@ -23,10 +23,10 @@ export const SIGN_UP_USER_MUTATION = gql`
       username
     }
   }
-`
+`;
 
 export const DELETE_REVIEW_MUTATION = gql`
   mutation DeleteReview($deleteReviewId: ID!) {
     deleteReview(id: $deleteReviewId)
   }
-`
+`;

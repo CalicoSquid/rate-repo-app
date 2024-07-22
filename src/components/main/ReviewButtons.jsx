@@ -20,7 +20,7 @@ export default function ReviewButtons({ review }) {
         },
         { text: "OK", onPress: () => deleteReview() },
       ]
-    )
+    );
   };
 
   return (
@@ -61,9 +61,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   deleteButton: {
-    backgroundColor: "#dc3545", // Updated red color for Delete
+    backgroundColor: "#dc3545",
   },
   viewRepositoryButton: {
-    backgroundColor: "#007bff", // Blue color for View Repository
+    backgroundColor: "#007bff", 
   },
 });

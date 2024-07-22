@@ -13,16 +13,27 @@ export const GET_REPOSITORIES = gql`
     $orderBy: AllRepositoriesOrderBy
     $orderDirection: OrderDirection
     $searchKeyword: String
+    $first: Int
+    $after: String
   ) {
     repositories(
       orderBy: $orderBy
       orderDirection: $orderDirection
       searchKeyword: $searchKeyword
+      first: $first
+      after: $after
     ) {
+      totalCount
+      pageInfo {
+        endCursor
+        hasNextPage
+        startCursor
+      }
       edges {
         node {
           ...RepositoryFragment
         }
+        cursor
       }
     }
   }
@@ -40,7 +51,7 @@ export const GET_REPOSITORY = gql`
 `;
 
 export const GET_ME = gql`
-  query GetMe ($includeReviews: Boolean = false) {
+  query GetMe($includeReviews: Boolean = false) {
     me {
       username
       reviews @include(if: $includeReviews) {
@@ -62,10 +73,10 @@ export const GET_ME = gql`
 `;
 
 export const GET_REVIEWS = gql`
-  query GetReviews($repositoryId: ID!) {
+  query GetReviews($repositoryId: ID!, $first: Int, $after: String) {
     repository(id: $repositoryId) {
       id
-      reviews {
+      reviews(first: $first, after: $after) {
         edges {
           node {
             id
@@ -76,6 +87,13 @@ export const GET_REVIEWS = gql`
               username
             }
           }
+          cursor
+        }
+        totalCount
+        pageInfo {
+          endCursor
+          hasNextPage
+          startCursor
         }
       }
     }
